@@ -80,7 +80,7 @@ public class Vehicle extends SimulatedObject{
                 road.addContamination(c); //needs to be implemented
 
                 //c)
-                if(this.location = road.lenght()){
+                if(this.location = road.lenght()){ //road .length() needs to be updated
                     //The vehicle enters the queue of the corresponding junction (by calling the corresponding method of class Junction)
                     //Modify the vehicle status
                 }
