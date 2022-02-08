@@ -8,6 +8,8 @@ public class Vehicle extends SimulatedObject{
         private Road road; //should be null if is not in any road //to declare road
         private int location;
         private int contaminationClass; // number between 0 and 1 -> Specification not defined
+        private int totalContamination;
+        private int totalDistance;
     //maxSpeed
         void setMaximumSpeed(int n){
             this.maximumSpeed = n;
@@ -50,6 +52,22 @@ public class Vehicle extends SimulatedObject{
         int getContaminationClass(){
             return this.contaminationClass;
         }
+    //totalContamination
+        void setTotalContamination(int n){
+            this.totalContamination = n;
+        }
+        int getTotalContamination(){
+            return this.totalContamination;
+        }
+    //totalDistance
+        void setTotalDistance(int n){
+            this.totalDistance = n;
+        }
+        int getTotalDistance(int n){
+            return this.totalDistance;
+        }
+
+
 
 
 
