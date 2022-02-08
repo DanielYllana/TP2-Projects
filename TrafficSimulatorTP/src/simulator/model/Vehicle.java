@@ -17,7 +17,7 @@ import java.lang.Math;
         - txt annotations needs to be implemented
         - no idea about json function
         - Make sure that the speed of the vehicle is 0 when its status is not Traveling
-
+        - don´t know where to put public in getters and setters
 
 
 
