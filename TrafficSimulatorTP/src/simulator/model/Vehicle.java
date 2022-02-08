@@ -1,7 +1,10 @@
 package simulator.model;
 
+import java.util.List;
+import java.lang.Math;
+
 public class Vehicle extends SimulatedObject{
-        private List<Junction> list;  // to complete well //don´t have set or get yet
+        private List<Junction> list;  // to complete well //don´t have set or get yet //to define junction
         private int maximumSpeed;
         private int currentSpeed;
         private VehicleStatus  status;
@@ -10,18 +13,45 @@ public class Vehicle extends SimulatedObject{
         private int contaminationClass; // number between 0 and 1 -> Specification not defined
         private int totalContamination;
         private int totalDistance;
+
+        Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary){
+            super(id);
+            //a) id non-empty string
+            //b) maxSpeed should be positive
+            //c) contClass between 0 and 10, both inclusive
+            //d) the length of the itinerary should be at least 2
+            //Besides, do not store list itinerary as it is received by
+            //the construction, but rather copy it into a new read-only list
+            //Collections.unmodifiableList(new ArrayList<>(itinerary));
+        }
+
+    //FUNCTIONS
+
+
+
+
+
+
+
+    //setters and getters: PENDING GET ITINERARY / MORE GETTERS THAN ASKED FOR
     //maxSpeed
-        void setMaximumSpeed(int n){
+        void setMaxSpeed(int n){
             this.maximumSpeed = n;
         }
-        int getMaximumSpeed(){
+        int getMaxSpeed(){
             return this.maximumSpeed;
         }
     //current speed
-        void setCurrentSpeed(int n){
-            this.currentSpeed = n;
+        void setSpeed(int s){
+            if(s < 0){
+
+            }//throw exception to implement
+            else{
+                this.currentSpeed = s + (int)(Math.random() * ((this.maximumSpeed - s) + 1));
+            }
+
         }
-        int getCurrentSpeed(){
+        int getSpeed(){
             return this.currentSpeed;
         }
     //status
@@ -53,10 +83,10 @@ public class Vehicle extends SimulatedObject{
             return this.contaminationClass;
         }
     //totalContamination
-        void setTotalContamination(int n){
+        void setTotalCO2(int n){
             this.totalContamination = n;
         }
-        int getTotalContamination(){
+        int getTotalCO2(){
             return this.totalContamination;
         }
     //totalDistance
@@ -66,11 +96,6 @@ public class Vehicle extends SimulatedObject{
         int getTotalDistance(int n){
             return this.totalDistance;
         }
-
-
-
-
-
 
 
 }
