@@ -1,7 +1,27 @@
 package simulator.model;
 
+import org.json.JSONObject;
+
 import java.util.List;
 import java.lang.Math;
+/*
+    PENDING THING IN THIS IMPLEMENTATION:
+        - List<Junction>
+        - Road to declare
+        - Vehicle constructor
+        - SetSpeed exception
+        - SetContaminationClass exception
+        - Put default functions package protected
+        - there may be more gets or set than asked -> done for future possible applications
+        - Function advance needs: road.length, road.addContamination, contaminationFactor = contaminationClass?, Junction method needed in c)
+        - txt annotations needs to be implemented
+        - no idea about json function
+        - Make sure that the speed of the vehicle is 0 when its status is not Traveling
+
+
+
+
+ */
 
 public class Vehicle extends SimulatedObject{
         private List<Junction> list;  // to complete well //don´t have set or get yet //to define junction
@@ -10,7 +30,7 @@ public class Vehicle extends SimulatedObject{
         private VehicleStatus  status;
         private Road road; //should be null if is not in any road //to declare road
         private int location;
-        private int contaminationClass; // number between 0 and 1 -> Specification not defined
+        private int contaminationClass;
         private int totalContamination;
         private int totalDistance;
 
@@ -25,8 +45,57 @@ public class Vehicle extends SimulatedObject{
             //Collections.unmodifiableList(new ArrayList<>(itinerary));
         }
 
-    //FUNCTIONS
+    //FUNCTIONS: NOT COMPLETED PACKAGE PROTECTED
+        void setSpeed(int s){
+            if(s < 0){
 
+            }//throw exception to implement
+            else{
+                this.currentSpeed = s + (int)(Math.random() * ((this.maximumSpeed - s) + 1));
+                // bio: https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
+                //source code: Min + (int)(Math.random() * ((Max - Min) + 1))
+            }
+
+        }
+
+        void setContaminationClass(int c){
+            if(c < 0 || c > 10){
+                //Throw exception
+            }
+            else{
+                this.contaminationClass = c;
+            }
+        }
+
+        void advance(int time){
+            if(this.status != VehicleStatus.TRAVELING){
+                int oldLocation = this.location;
+                //a)
+                this.location = Math.min(this.location + this.currentSpeed, road.legnth()); //needs of road.length
+                //https://www.geeksforgeeks.org/java-math-min-method-examples/
+
+                //b)
+                int c = this.contaminationClass *  (this.location - oldLocation);
+                this.totalContamination = this.totalContamination + c;
+                road.addContamination(c); //needs to be implemented
+
+                //c)
+                if(this.location = road.lenght()){
+                    //The vehicle enters the queue of the corresponding junction (by calling the corresponding method of class Junction)
+                    //Modify the vehicle status
+                }
+            }
+        }
+
+        void moveToNextRoad(){
+            if(this.status == VehicleStatus.PENDING || this.status == VehicleStatus.WAITING){
+                //needed functions from Road
+            }//throw exception
+        }
+
+        public JSONObject report(){
+            //no idea of this shit
+        }
 
 
 
@@ -42,15 +111,7 @@ public class Vehicle extends SimulatedObject{
             return this.maximumSpeed;
         }
     //current speed
-        void setSpeed(int s){
-            if(s < 0){
 
-            }//throw exception to implement
-            else{
-                this.currentSpeed = s + (int)(Math.random() * ((this.maximumSpeed - s) + 1));
-            }
-
-        }
         int getSpeed(){
             return this.currentSpeed;
         }
@@ -76,9 +137,7 @@ public class Vehicle extends SimulatedObject{
             return this.location;
         }
      //contaminationClass
-        void setContaminationClass(int n){
-            this.contaminationClass = n;
-        }
+
         int getContaminationClass(){
             return this.contaminationClass;
         }
@@ -93,7 +152,7 @@ public class Vehicle extends SimulatedObject{
         void setTotalDistance(int n){
             this.totalDistance = n;
         }
-        int getTotalDistance(int n){
+        int getTotalDistance(){
             return this.totalDistance;
         }
 
