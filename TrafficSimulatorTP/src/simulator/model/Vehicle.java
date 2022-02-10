@@ -47,7 +47,7 @@ public class Vehicle extends SimulatedObject{
             this.contaminationClass = contClass;
         }
 
-        if (itinerary.getLength() < 2) {
+        if (itinerary.size() < 2) {
             throw new IllegalArgumentException("itinerary length should be at least 2");
         } else {
             this.itinerary = Collections.unmodifiableList(new ArrayList<Junction>(itinerary)); // da error porque Junction no esta definido
