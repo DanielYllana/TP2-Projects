@@ -3,16 +3,9 @@ package simulator.model;
 /*
    PENDING IN THIS IMPLEMENTATION:
         - Junction is needed
-        - Constructor to be completed
-        - to complete enter()
-        - setWeather() needs to complete exception
-        - addContamination() needs to complete exception
-        - error in abstract reduceTotalContamination(), updateSpeedLimit(), calculateVehicleSpeed()
-        - advance 3) to complete
-        - no idea about Json
+        - Complete with the notes of the professor
         - don't know about where to put public in getters/setters
-        - not sure setTotalC02
-        - not completed getVehicle()
+        - package protected?
  */
 
 import org.json.JSONArray;

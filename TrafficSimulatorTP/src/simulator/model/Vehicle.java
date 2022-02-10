@@ -9,16 +9,9 @@ import java.lang.Math;
 /*
     PENDING THING IN THIS IMPLEMENTATION:
         - List<Junction>
-        - Road to declare
-        - Vehicle constructor
-        - SetSpeed exception
-        - SetContaminationClass exception
         - Put default functions package protected
-        - there may be more gets or set than asked -> done for future possible applications
         - Function advance needs: road.length, road.addContamination, contaminationFactor = contaminationClass?, Junction method needed in c)
         - txt annotations needs to be implemented
-        - no idea about json function
-        - Make sure that the speed of the vehicle is 0 when its status is not Traveling
         - don´t know where to put public in getters and setters
 
 
@@ -92,6 +85,7 @@ public class Vehicle extends SimulatedObject{
             int c = this.contaminationClass *  (this.location - oldLocation);
             this.totalContamination += c;
             road.addContamination(c); //needs to be implemented
+            // may be for above road.setContamination(road.get() + c); instead of new functionx
 
             //c)
             if(this.location == road.getLength()){
@@ -140,7 +134,7 @@ public class Vehicle extends SimulatedObject{
         Additional setters (must be private)
     */
 
-    void setStatus(VehicleStatus _status) {
+    private void setStatus(VehicleStatus _status) {
         this.status = _status;
         if (this.status != VehicleStatus.TRAVELING) {
             this.currentSpeed = 0;
