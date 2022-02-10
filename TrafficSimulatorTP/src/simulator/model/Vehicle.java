@@ -2,6 +2,8 @@ package simulator.model;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.lang.Math;
 /*
@@ -24,137 +26,166 @@ import java.lang.Math;
  */
 
 public class Vehicle extends SimulatedObject{
-        private List<Junction> list;  // to complete well //don´t have set or get yet //to define junction
-        private int maximumSpeed;
-        private int currentSpeed;
-        private VehicleStatus  status;
-        private Road road; //should be null if is not in any road //to declare road
-        private int location;
-        private int contaminationClass;
-        private int totalContamination;
-        private int totalDistance;
+    private List<Junction> itinerary;  // to complete well //don´t have set or get yet //to define junction
+    private int maximumSpeed;
+    private int currentSpeed;
+    private VehicleStatus  status = VehicleStatus.PENDING;
+    private Road road;              // current road
+    private int location;           // dist to begining of road
+    private int contaminationClass;     // [0, 10]
+    private int totalContamination;
+    private int totalDistance;
 
-        Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary){
-            super(id);
-            //a) id non-empty string
-            //b) maxSpeed should be positive
-            //c) contClass between 0 and 10, both inclusive
-            //d) the length of the itinerary should be at least 2
-            //Besides, do not store list itinerary as it is received by
-            //the construction, but rather copy it into a new read-only list
-            //Collections.unmodifiableList(new ArrayList<>(itinerary));
+    // Not given by the teacher
+    private int itineraryIndex = 0;
+
+    Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary){
+        super(id);
+
+        if (maxSpeed < 0) {
+            throw new IllegalArgumentException("max speed should be positive");
+        } else {
+            this.maximumSpeed = maxSpeed;
         }
+
+        if (contClass > 10 || contClass < 0) {
+            throw new IllegalArgumentException("contamination class should be in [1, 10]");
+        } else {
+            this.contaminationClass = contClass;
+        }
+
+        if (itinerary.getLength() < 2) {
+            throw new IllegalArgumentException("itinerary length should be at least 2");
+        } else {
+            this.itinerary = Collections.unmodifiableList(new ArrayList<Junction>(itinerary)); // da error porque Junction no esta definido
+        }
+
+    }
 
     //FUNCTIONS: NOT COMPLETED PACKAGE PROTECTED
-        void setSpeed(int s){
-            if(s < 0){
-
-            }//throw exception to implement
-            else{
-                this.currentSpeed = s + (int)(Math.random() * ((this.maximumSpeed - s) + 1));
-                // bio: https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
-                //source code: Min + (int)(Math.random() * ((Max - Min) + 1))
-            }
-
+    void setSpeed(int s){
+        if(s < 0){
+            throw new IllegalArgumentException("cant set speed to a negative value");
         }
-
-        void setContaminationClass(int c){
-            if(c < 0 || c > 10){
-                //Throw exception
-            }
-            else{
-                this.contaminationClass = c;
-            }
+        else{
+            // make sure not to go over the max speed
+            this.currentSpeed = Math.min(s, this.maximumSpeed);
         }
+    }
 
-        void advance(int time){
-            if(this.status != VehicleStatus.TRAVELING){
-                int oldLocation = this.location;
-                //a)
-                this.location = Math.min(this.location + this.currentSpeed, road.legnth()); //needs of road.length
-                //https://www.geeksforgeeks.org/java-math-min-method-examples/
+    void setContaminationClass(int c){
+        if(c < 0 || c > 10){
+            throw new IllegalArgumentException("Contamination class has to be in [1, 10]");
+        }
+        else{
+            this.contaminationClass = c;
+        }
+    }
 
-                //b)
-                int c = this.contaminationClass *  (this.location - oldLocation);
-                this.totalContamination = this.totalContamination + c;
-                road.addContamination(c); //needs to be implemented
+    void advance(int time){
+        if(this.status != VehicleStatus.TRAVELING){
+            int oldLocation = this.location;
+            //a)
+            this.location = Math.min(this.location + this.currentSpeed, this.road.getLength());
 
-                //c)
-                if(this.location = road.lenght()){ //road .length() needs to be updated
-                    //The vehicle enters the queue of the corresponding junction (by calling the corresponding method of class Junction)
-                    //Modify the vehicle status
-                }
+            //b)
+            int c = this.contaminationClass *  (this.location - oldLocation);
+            this.totalContamination += c;
+            road.addContamination(c); //needs to be implemented
+
+            //c)
+            if(this.location == road.getLength()){
+                //this.itinerary(this.itineraryIndex). call function to enter queue
+                //The vehicle enters the queue of the corresponding junction (by calling the corresponding method of class Junction)
+                this.setStatus(VehicleStatus.WAITING);
             }
         }
+    }
 
-        void moveToNextRoad(){
-            if(this.status == VehicleStatus.PENDING || this.status == VehicleStatus.WAITING){
-                //needed functions from Road
-            }//throw exception
+    void moveToNextRoad(){
+        if(this.status == VehicleStatus.PENDING){
+            // enter new road
+            this.status = VehicleStatus.TRAVELING;
+        }
+        else if (this.status == VehicleStatus.WAITING){
+            this.road.exit(this);
+            //this.road = this.itinerary(this.itineraryIndex) enter new road
+            this.setStatus(VehicleStatus.TRAVELING);
+
+        } else {
+            //throw new
+            // throw exception; no se que tipo de excepcion poner ???
+        }
+    }
+
+    public JSONObject report(){
+        JSONObject jo = new JSONObject();
+        jo.put("id", this._id);
+        jo.put("speed", this.currentSpeed);
+        jo.put("distance", this.totalDistance);
+        jo.put("co2", this.totalContamination);
+        jo.put("class", this.contaminationClass);
+        jo.put("status", this.status);
+        if (this.status != VehicleStatus.PENDING && this.status != VehicleStatus.ARRIVED) {
+            jo.put("road", this.road._id);
+            jo.put("location", this.location);
         }
 
-        public JSONObject report(){
-            //no idea of this shit
+
+        return jo;
+    }
+
+
+    /*  -----------------------
+        Additional setters (must be private)
+    */
+
+    void setStatus(VehicleStatus _status) {
+        this.status = _status;
+        if (this.status != VehicleStatus.TRAVELING) {
+            this.currentSpeed = 0;
         }
+    }
 
 
 
 
+    /*  -----------------------
+        getters: Only the ones asked by the teacher
+    */
 
+    int getLocation() {
+        return this.location;
+    }
 
-    //setters and getters: PENDING GET ITINERARY / MORE GETTERS THAN ASKED FOR
-    //maxSpeed
-        void setMaxSpeed(int n){
-            this.maximumSpeed = n;
-        }
-        int getMaxSpeed(){
-            return this.maximumSpeed;
-        }
-    //current speed
+    int getSpeed(){
+        return this.currentSpeed;
+    }
 
-        int getSpeed(){
-            return this.currentSpeed;
-        }
-    //status
-        void setStatus(VehicleStatus  status){
-            this.status = status;
-        }
-        VehicleStatus getStatus(){
-            return this.status;
-        }
-    //road
-        void setRoad(Road  road){
-            this.road = road;
-        }
-        Road getRoad(){
-            return this.road;
-        }
-    //location
-        void setLocation(int  n){
-            this.location = n;
-        }
-        int getLocation(){
-            return this.location;
-        }
-     //contaminationClass
+    int getMaxSpeed(){
+        return this.maximumSpeed;
+    }
 
-        int getContaminationClass(){
-            return this.contaminationClass;
-        }
-    //totalContamination
-        void setTotalCO2(int n){
-            this.totalContamination = n;
-        }
-        int getTotalCO2(){
-            return this.totalContamination;
-        }
-    //totalDistance
-        void setTotalDistance(int n){
-            this.totalDistance = n;
-        }
-        int getTotalDistance(){
-            return this.totalDistance;
-        }
+    int getContClass(){
+        return this.contaminationClass;
+    }
+
+    VehicleStatus getStatus(){
+        return this.status;
+    }
+
+    int getTotalCO2(){
+        return this.totalContamination;
+    }
+
+    List<Junction> getItinerary() {
+        return this.itinerary;
+    }
+
+    Road getRoad(){
+        return this.road;
+    }
+
 
 
 }

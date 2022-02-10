@@ -15,23 +15,54 @@ package simulator.model;
         - not completed getVehicle()
  */
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import simulator.misc.SortedArrayList;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class Road extends SimulatedObject{
+public abstract class Road extends SimulatedObject{
 
-    private Junction srcJunction; // source Junction
-    private Junction destJunction; // destination Junction
+    private Junction srcJunction;       // source Junction
+    private Junction destJunction;      // destination Junction
     private int length;
-    private int maxSpeed; // Maximum speed
-    private int crrSpeedLimit; // Current Speed limit ; ITS INITIAL VALUE SHOULD BE EQUAL TO maxSpeed
-    private int cntAlarmLimit; // Contamination alarm limit
-    private Weather weatherCondt; // Weather conditions
-    private int totalCont; // total contamination
-    private List<Vehicle> vehicles; //SHOULD ALWAYS BE SORTED BY VEHICLE LOCATION DESC
+    private int maxSpeed;               // Maximum speed
+    protected int currentSpeedLimit;      // Current Speed limit ; ITS INITIAL VALUE SHOULD BE EQUAL TO maxSpeed
+    private int cntAlarmLimit;          // Contamination alarm limit
+    private Weather weatherConditions;  // Weather conditions
+    protected int totalContamination;     // total contamination
+    private List<Vehicle> vehicles;     //SHOULD ALWAYS BE SORTED BY VEHICLE LOCATION DESC
 
 
     Road(String id, Junction srcJunction, Junction destJunction, int maxSpeed, int contLimit, int length, Weather weather){
         super(id);
+
+        if (srcJunction == null || destJunction == null || weather == null) {
+            throw new IllegalArgumentException("Source junction, destination junction, and weather can't be null values");
+        }
+        this.srcJunction = srcJunction;
+        this.destJunction = destJunction;
+        this.weatherConditions = weather;
+
+        if (maxSpeed <= 0) {
+            throw new IllegalArgumentException("Max speed must be a positive value");
+        }
+        this.maxSpeed = maxSpeed;
+
+        if (contLimit < 0) {
+            throw new IllegalArgumentException("cont limit must be a non-negative value");
+        }
+        this.cntAlarmLimit = contLimit;
+
+        if (length <= 0) {
+            throw new IllegalArgumentException("length must be positive");
+        }
+        this.length = length;
+
+        this.vehicles = new SortedArrayList<>();
+
         /*
         The constructor should add the road as an incoming road to its destination junction, and
         as an outgoing road of its source junction. In this constructor, you should check that
@@ -42,29 +73,31 @@ public class Road extends SimulatedObject{
     }
 
     void enter(Vehicle v){
-        // add the to the corresponding list ( at the end)
-        //check that following hold and throw a corresponding exception otherwise: the vehicle location is 0, the vehicle speed is 0
+        if (v.getLocation() != 0 || v.getSpeed() != 0) {
+            throw new IllegalArgumentException("vehicle location and speed must be 0");
+        }
+        vehicles.add(v);
     }
 
     void exit(Vehicle v){
-        //remove the vehicle from the vehicle list
+        vehicles.remove(v);
     }
 
     void setWeather(Weather w){
-        if(this.weatherCondt == null){
-            //throw exception
+        if(this.weatherConditions == null){
+            throw new IllegalArgumentException("Weather must not be null");
         }
         else{
-            this.weatherCondt = w;
+            this.weatherConditions = w;
         }
     }
 
     void addContamination(int c){
         if(c < 0){
-            //Throw exception
+            throw new IllegalArgumentException("contamiation level must be non-negative");
         }
         else{
-            this.totalCont = this.totalCont + c;
+            this.totalContamination = this.totalContamination + c;
         }
     }
 
@@ -73,85 +106,77 @@ public class Road extends SimulatedObject{
     abstract int calculateVehicleSpeed(Vehicle v);
 
     void advance(int time){
-        reduceTotalContamination();
-        updateSpeedLimit();
-        //3) to complete
+        this.reduceTotalContamination();
+        this.updateSpeedLimit();
+
+        for (Vehicle v: vehicles) {
+            v.setSpeed(this.calculateVehicleSpeed(v));
+            v.advance(1); // no se que poner en time
+        }
+        vehicles.sort(Comparator.comparingInt(Vehicle::getLocation));
+        // using built in comparator for ints
     }
 
     public JSONObject report(){
-        //don´t know shit about json
+        JSONObject jo = new JSONObject();
+        jo.put("id", this._id);
+        jo.put("speedLimit", this.currentSpeedLimit);
+        jo.put("weather", this.weatherConditions);
+        jo.put("co2", this.totalContamination);
+
+        JSONArray ja = new JSONArray();
+        for (Vehicle v: this.vehicles) {
+            ja.put(v._id);
+        }
+
+        jo.put("vehicles", ja);
+
+        return jo;
     }
 
-    //getters and setters
-//length
+
+
+    /* --------------
+        Getters
+     */
+
     public int getLength() {
         return this.length;
     }
 
-    private void setLength(int l){
-        this.length = l;
-    }
-//destJunction
     public Junction getDestJunction() {
         return this.destJunction;
     }
-
-    private void setDestJunction(Junction destJunction) {
-        this.destJunction = destJunction;
-    }
-//srcDest
 
     public Junction getSrcJunction() {
         return this.srcJunction;
     }
 
-    private void setSrcJunction(Junction srcJunction) {
-        this.srcJunction = srcJunction;
-    }
-//weather
-
-    public Weather getWeatherCondt() {
-        return this.weatherCondt;
+    public Weather getWeather() {
+        return this.weatherConditions;
     }
 
-    private void setWeatherCondt(Weather weatherCondt) {
-        this.weatherCondt = weatherCondt;
-    }
-//contamination limit
-
-
-    private void setCntAlarmLimit(int cntAlarmLimit) {
-        this.cntAlarmLimit = cntAlarmLimit;
-    }
-
-    public int getCntAlarmLimit() {
+    public int getContLimit() {
         return this.cntAlarmLimit;
     }
-//max speed
 
     public int getMaxSpeed() {
         return this.maxSpeed;
     }
-    private void setMaxSpeed(int s){
-        this.maxSpeed = s;
-    }
-//total C02
+
     public int getTotalCO2(){
-        return this.totalCont;
+        return this.totalContamination;
     }
-    private void setTotalCO2(int c){
-        this.totalCont = c;
-        //also could be thought as this.totalcont = this.totalcont + c, depending on the implementation
+
+    public int getSpeedLimit(){
+        return this.currentSpeedLimit;
     }
-//speed limit
-    public int getCrrSpeedLimit(){
-        return this.crrSpeedLimit;
+
+    public List<Vehicle> getVehicles() {
+        return Collections.unmodifiableList(vehicles);
     }
-    private void setCrrSpeedLimit(int s){
-        this.crrSpeedLimit = s;
-    }
-//vehicles
-    public List<Vehicle> getVehicles(){
-        //Not completely sure about that
+
+    private void setC(int c) {
+        this.totalContamination = c;
     }
 }
