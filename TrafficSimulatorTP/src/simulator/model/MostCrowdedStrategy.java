@@ -1,6 +1,6 @@
 package simulator.model;
 /*
-    SAME PROBLEMS AS IN ROUND ROBIN STRATEGY
+   NOT SPECIALLY ABOUT THIS IMPLEMENTATION
  */
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy{
         if(roads.size() <= 0){
             return -1;
         }
-        else if(){
+        else if(currGreen == -1){
 
         }
         else if((currTime - lastSwitchingTime) < timeSlot){
