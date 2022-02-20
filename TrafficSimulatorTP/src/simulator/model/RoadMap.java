@@ -28,8 +28,8 @@ public class RoadMap {
 
     void addRoad(Road r) {
         if (this.roadsMap.containsKey(r.getId()) ||
-            !this.junctionsMap.containsKey(r.getSrcJunction().getId()) ||
-            !this.junctionsMap.containsKey(r.getDestJunction().getId())
+            !this.junctionsMap.containsKey(r.getSrc().getId()) ||
+            !this.junctionsMap.containsKey(r.getDest().getId())
         ) {
             throw new IllegalArgumentException("Road is already in map");
         }
@@ -102,17 +102,16 @@ public class RoadMap {
 
 
         JSONArray jaRoads = new JSONArray();
-        for (Junction j: this.junctionsList) {
-            jaRoads.put(j.report());
+        for (Road r: this.roadsList) {
+            jaRoads.put(r.report());
         }
-        jo.put("road", jaRoads);
-
+        jo.put("roads", jaRoads);
 
         JSONArray jaVehicles = new JSONArray();
-        for (Junction j: this.junctionsList) {
-            jaVehicles.put(j.report());
+        for (Vehicle v: this.vehiclesList) {
+            jaVehicles.put(v.report());
         }
-        jo.put("road", jaVehicles);
+        jo.put("vehicles", jaVehicles);
 
         return jo;
     }

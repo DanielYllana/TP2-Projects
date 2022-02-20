@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import simulator.misc.SortedArrayList;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -43,6 +44,7 @@ public abstract class Road extends SimulatedObject{
             throw new IllegalArgumentException("Max speed must be a positive value");
         }
         this.maxSpeed = maxSpeed;
+        this.currentSpeedLimit = maxSpeed;
 
         if (contLimit < 0) {
             throw new IllegalArgumentException("cont limit must be a non-negative value");
@@ -54,15 +56,13 @@ public abstract class Road extends SimulatedObject{
         }
         this.length = length;
 
-        this.vehicles = new SortedArrayList<>();
+        this.totalContamination = 0;
 
-        /*
-        The constructor should add the road as an incoming road to its destination junction, and
-        as an outgoing road of its source junction. In this constructor, you should check that
-        arguments have valid values and throw corresponding exceptions otherwise: maxSpeed is
-        positive; contLimit is non-negative; length is positive; srcJunc, destJunc and weather is not
-        null.
-         */
+        this.vehicles = new ArrayList<Vehicle>();
+
+        this.destJunction.addIncomingRoad(this);
+        this.srcJunction.addOutGoingRoad(this);
+
     }
 
     void enter(Vehicle v){
@@ -70,6 +70,7 @@ public abstract class Road extends SimulatedObject{
             throw new IllegalArgumentException("vehicle location and speed must be 0");
         }
         vehicles.add(v);
+        //this.sortVehicles();
     }
 
     void exit(Vehicle v){
@@ -77,7 +78,7 @@ public abstract class Road extends SimulatedObject{
     }
 
     void setWeather(Weather w){
-        if(this.weatherConditions == null){
+        if(w == null){
             throw new IllegalArgumentException("Weather must not be null");
         }
         else{
@@ -87,7 +88,6 @@ public abstract class Road extends SimulatedObject{
 
     void addContamination(int c){
         if(c < 0){
-            throw new IllegalArgumentException("contamiation level must be non-negative");
         }
         else{
             this.totalContamination = this.totalContamination + c;
@@ -102,19 +102,20 @@ public abstract class Road extends SimulatedObject{
         this.reduceTotalContamination();
         this.updateSpeedLimit();
 
-        for (Vehicle v: vehicles) {
+        for (Vehicle v: this.vehicles) {
             v.setSpeed(this.calculateVehicleSpeed(v));
-            v.advance(1); // no se que poner en time
+            // TODO
+            v.advance(time);
         }
-        vehicles.sort(Comparator.comparingInt(Vehicle::getLocation));
-        // using built in comparator for ints
+        this.sortVehicles();
+
     }
 
     public JSONObject report(){
         JSONObject jo = new JSONObject();
         jo.put("id", this._id);
-        jo.put("speedLimit", this.currentSpeedLimit);
-        jo.put("weather", this.weatherConditions);
+        jo.put("speedlimit", this.currentSpeedLimit);
+        jo.put("weather", this.weatherConditions.toString());
         jo.put("co2", this.totalContamination);
 
         JSONArray ja = new JSONArray();
@@ -128,6 +129,12 @@ public abstract class Road extends SimulatedObject{
     }
 
 
+    private void sortVehicles() {
+        // using built in comparator for ints
+        this.vehicles.sort((b, a)-> a.getLocation() - b.getLocation());
+    }
+
+
 
     /* --------------
         Getters
@@ -137,11 +144,11 @@ public abstract class Road extends SimulatedObject{
         return this.length;
     }
 
-    public Junction getDestJunction() {
+    public Junction getDest() {
         return this.destJunction;
     }
 
-    public Junction getSrcJunction() {
+    public Junction getSrc() {
         return this.srcJunction;
     }
 
