@@ -25,19 +25,23 @@ public class TrafficSimulator {
     public void advance() {
         this.simulationTime++;
 
+
         for(Event e: this.eventsList) {
             if (e.getTime() == this.simulationTime) {
                 e.execute(this.roadMap);
-                this.eventsList.remove(e);
+                //this.eventsList.remove(e);
             }
         }
 
+        this.eventsList.removeIf(b -> (b.getTime() == this.simulationTime));
+
+
         for(Junction j: this.roadMap.getJunctions()) {
-            j.advance(1); // i dont know what the time should be
+            j.advance(this.simulationTime);
         }
 
         for(Road r: this.roadMap.getRoads()) {
-            r.advance(1); // i dont know what the time should be
+            r.advance(this.simulationTime);
         }
     }
 

@@ -25,8 +25,7 @@ public class SetWeatherEvent extends Event {
             Road r = map.getRoad(pair.getFirst());
 
             if (r == null ){
-                // TODO
-                // Throw error if the road does not exist in the road-map
+                throw new IllegalArgumentException("Road does not exists in road-map");
             }
 
             r.setWeather(pair.getSecond());

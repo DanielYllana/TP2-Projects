@@ -18,14 +18,7 @@ public class SortedArrayList<E> extends ArrayList<E> {
 	}
 
 	public SortedArrayList() {
-		_cmp = new Comparator<E>() {
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public int compare(E o1, E o2) {
-				return ((Comparable<E>) o1).compareTo(o2);
-			}
-		};
+		_cmp = (o1, o2) -> ((Comparable<E>) o1).compareTo(o2);
 	}
 
 	@Override
@@ -38,7 +31,6 @@ public class SortedArrayList<E> extends ArrayList<E> {
 		while (j >= 0 && _cmp.compare(get(j), e) == 1) {
 			j--;
 		}
-
 		super.add(j + 1, e);
 
 		return true;

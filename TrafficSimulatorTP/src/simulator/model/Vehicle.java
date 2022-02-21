@@ -6,17 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.lang.Math;
-/*
-    PENDING THING IN THIS IMPLEMENTATION:
-        - List<Junction>
-        - Put default functions package protected
-        - Function advance needs: road.length, road.addContamination, contaminationFactor = contaminationClass?, Junction method needed in c)
-        - txt annotations needs to be implemented
-        - don´t know where to put public in getters and setters
 
-
-
- */
 
 public class Vehicle extends SimulatedObject{
     private List<Junction> itinerary;  // to complete well //don´t have set or get yet //to define junction
@@ -35,7 +25,7 @@ public class Vehicle extends SimulatedObject{
     Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary){
         super(id);
 
-        if (maxSpeed < 0) {
+        if (maxSpeed <= 0) {
             throw new IllegalArgumentException("max speed should be positive");
         } else {
             this.maximumSpeed = maxSpeed;
@@ -50,23 +40,26 @@ public class Vehicle extends SimulatedObject{
         if (itinerary.size() < 2) {
             throw new IllegalArgumentException("itinerary length should be at least 2");
         } else {
-            this.itinerary = Collections.unmodifiableList(new ArrayList<Junction>(itinerary)); // da error porque Junction no esta definido
+            this.itinerary = Collections.unmodifiableList(new ArrayList<Junction>(itinerary));
         }
+
+
 
     }
 
-    //FUNCTIONS: NOT COMPLETED PACKAGE PROTECTED
     void setSpeed(int s){
         if(s < 0){
             throw new IllegalArgumentException("cant set speed to a negative value");
         }
         else{
-            // make sure not to go over the max speed
-            this.currentSpeed = Math.min(s, this.maximumSpeed);
+            if (this.status == VehicleStatus.TRAVELING) {
+                // make sure not to go over the max speed
+                this.currentSpeed = Math.min(s, this.maximumSpeed);
+            }
         }
     }
 
-    void setContaminationClass(int c){
+    void setContClass(int c){
         if(c < 0 || c > 10){
             throw new IllegalArgumentException("Contamination class has to be in [1, 10]");
         }
@@ -76,40 +69,66 @@ public class Vehicle extends SimulatedObject{
     }
 
     void advance(int time){
-        if(this.status != VehicleStatus.TRAVELING){
+        if(this.status == VehicleStatus.TRAVELING){
             int oldLocation = this.location;
-            //a)
+
             this.location = Math.min(this.location + this.currentSpeed, this.road.getLength());
 
-            //b)
-            int c = this.contaminationClass *  (this.location - oldLocation);
-            this.totalContamination += c;
-            road.addContamination(c); //needs to be implemented
-            // may be for above road.setContamination(road.get() + c); instead of new functionx
+            int deltDist = this.location - oldLocation;
+            this.totalDistance += deltDist;
 
-            //c)
+            int c = this.contaminationClass *  deltDist;
+            this.totalContamination += c;
+            road.addContamination(c);
+
             if(this.location == road.getLength()){
-                //this.itinerary(this.itineraryIndex). call function to enter queue
+
+                // TODO CHECK might go in moveToNextRoad()
+                Road nextRoad = this.itinerary.get(this.itineraryIndex).roadTo(this.itinerary.get(this.itineraryIndex + 1));
+                this.itinerary.get(this.itineraryIndex + 1).enter(this, nextRoad);
+                // TODO CHECK
                 //The vehicle enters the queue of the corresponding junction (by calling the corresponding method of class Junction)
                 this.setStatus(VehicleStatus.WAITING);
+
             }
         }
     }
 
     void moveToNextRoad(){
+
+
         if(this.status == VehicleStatus.PENDING){
-            // enter new road
+            this.road = this.itinerary.get(0).roadTo(this.itinerary.get(1)); // get first road
+            this.road.enter(this);
             this.status = VehicleStatus.TRAVELING;
+            this.itineraryIndex = 0;
         }
         else if (this.status == VehicleStatus.WAITING){
-            this.road.exit(this);
-            //this.road = this.itinerary(this.itineraryIndex) enter new road
-            this.setStatus(VehicleStatus.TRAVELING);
 
+            this.exitCurrentRoad();
+            if (this.itineraryIndex + 1 == this.itinerary.size() - 1) {
+                this.setStatus(VehicleStatus.ARRIVED);
+            } else {
+                // get new road to next junction
+                this.road = this.itinerary.get(this.itineraryIndex + 1).roadTo(this.itinerary.get(this.itineraryIndex + 2));
+                this.road.enter(this); // enter new road
+                this.setStatus(VehicleStatus.TRAVELING);
+
+            }
+            this.itineraryIndex++;
         } else {
+            // TODO
             //throw new
             // throw exception; no se que tipo de excepcion poner ???
         }
+        ;
+    }
+
+
+    private void exitCurrentRoad() {
+        this.road.exit(this);
+        this.setSpeed(0);
+        this.location = 0;
     }
 
     public JSONObject report(){
@@ -119,7 +138,7 @@ public class Vehicle extends SimulatedObject{
         jo.put("distance", this.totalDistance);
         jo.put("co2", this.totalContamination);
         jo.put("class", this.contaminationClass);
-        jo.put("status", this.status);
+        jo.put("status", this.status.toString());
         if (this.status != VehicleStatus.PENDING && this.status != VehicleStatus.ARRIVED) {
             jo.put("road", this.road._id);
             jo.put("location", this.location);
@@ -140,8 +159,6 @@ public class Vehicle extends SimulatedObject{
             this.currentSpeed = 0;
         }
     }
-
-
 
 
     /*  -----------------------

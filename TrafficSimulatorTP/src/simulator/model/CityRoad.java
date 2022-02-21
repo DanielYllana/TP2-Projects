@@ -1,7 +1,7 @@
 package simulator.model;
 
 public class CityRoad extends Road {
-    CityRoad(String id, Junction srcJunction, Junction destJunction, int maxSpeed, int contLimit, int length, Weather weather) {
+    public CityRoad(String id, Junction srcJunction, Junction destJunction, int maxSpeed, int contLimit, int length, Weather weather) {
         super(id, srcJunction, destJunction, maxSpeed, contLimit, length, weather);
     }
 

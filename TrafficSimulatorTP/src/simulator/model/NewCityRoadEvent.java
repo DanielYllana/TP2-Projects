@@ -1,19 +1,28 @@
 package simulator.model;
 
 public class NewCityRoadEvent extends Event {
-    Road road;
+    private String id, srcJun, destJun;
+    private int length, co2Limit, maxSpeed;
+    private Weather weather;
 
     public NewCityRoadEvent(int time, String id, String srcJun, String destJun, int length, int co2Limit,
                             int maxSpeed, Weather weather) {
         super(time);
-
-        // TODO
-        // Create the src and dest junction from the String
-        //this.road = new CityRoad(id, srcJun, destJun, maxSpeed, co2Limit, length, weather);
+        this.id = id;
+        this.srcJun = srcJun;
+        this.destJun = destJun;
+        this.length = length;
+        this.co2Limit = co2Limit;
+        this.maxSpeed = maxSpeed;
+        this.weather = weather;
     }
 
     @Override
     void execute(RoadMap map) {
-        map.addRoad(this.road);
+        Junction srcJun = map.getJunction(this.srcJun);
+        Junction destJun = map.getJunction(this.destJun);
+
+        Road r = new CityRoad(this.id, srcJun, destJun, this.maxSpeed, this.co2Limit, this.length, this.weather);
+        map.addRoad(r);
     }
 }
