@@ -190,7 +190,7 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="22" language="java" name="simulator.model.SetWeatherEvent" project="TrafficSimulator"
+  <class id="22" language="java" name="simulator.model.SetWeatherEvent" project="TrafficSimulator" 
     file="/TrafficSimulator/src/simulator/model/SetWeatherEvent.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2802" y="296"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

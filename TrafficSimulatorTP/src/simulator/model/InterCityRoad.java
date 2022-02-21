@@ -16,19 +16,14 @@ public class InterCityRoad extends Road {
                 break;
             case CLOUDY:
                 x = 3;
-                break;
             case RAINY:
                 x = 10;
-                break;
             case WINDY:
                 x = 15;
-                break;
             case STORM:
                 x = 20;
-                break;
             default:
                 x = 0;
-                break;
         }
 
         this.totalContamination = ((100 - x) * this.totalContamination) / 100;

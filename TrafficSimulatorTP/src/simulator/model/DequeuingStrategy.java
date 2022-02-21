@@ -5,4 +5,6 @@ import java.util.List;
 public interface DequeuingStrategy {
 
     List<Vehicle> dequeue(List<Vehicle> q);
+    // TODO
+    // Implement MoveFirstStrategy and MoveAllStrategy
 }

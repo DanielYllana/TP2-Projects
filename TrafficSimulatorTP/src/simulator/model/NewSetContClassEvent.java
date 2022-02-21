@@ -23,10 +23,10 @@ public class NewSetContClassEvent extends Event {
             Vehicle v = map.getVehicle(c.getFirst());
 
             if (v == null) {
-                throw new IllegalArgumentException("Vehicle does not exist in road-map");
+                // TODO
                 // Throw exception if vehicle does not exist in road-map
             }
-            v.setContClass(c.getSecond());
+            v.setContaminationClass(c.getSecond());
         }
     }
 }

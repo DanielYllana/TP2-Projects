@@ -2,15 +2,15 @@ package simulator.model;
 
 public class NewJunctionEvent extends Event{
 
-    private Junction newJunction;
+    Junction junction;
 
     public NewJunctionEvent(int time, String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy, int xCoor, int yCoor) {
         super(time);
-        this.newJunction = new Junction(id, lsStrategy, dqStrategy, xCoor, yCoor);
+        this.junction = new Junction(id, lsStrategy, dqStrategy, xCoor, yCoor);
     }
 
     @Override
     void execute(RoadMap map) {
-        map.addJunction(this.newJunction);
+        map.addJunction(this.junction);
     }
 }
