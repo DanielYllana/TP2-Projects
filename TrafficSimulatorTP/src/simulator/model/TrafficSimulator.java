@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import simulator.misc.SortedArrayList;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class TrafficSimulator {
@@ -19,7 +20,9 @@ public class TrafficSimulator {
     }
 
     public void addEvent(Event e) {
+
         this.eventsList.add(e); // should still be sorted
+        this.eventsList.sort(Comparator.comparingInt(Event::getTime));
     }
 
     public void advance() {
@@ -29,7 +32,6 @@ public class TrafficSimulator {
         for(Event e: this.eventsList) {
             if (e.getTime() == this.simulationTime) {
                 e.execute(this.roadMap);
-                //this.eventsList.remove(e);
             }
         }
 

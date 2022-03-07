@@ -27,7 +27,7 @@ public abstract class Road extends SimulatedObject{
     private int cntAlarmLimit;          // Contamination alarm limit
     private Weather weatherConditions;  // Weather conditions
     protected int totalContamination;     // total contamination
-    private List<Vehicle> vehicles;     //SHOULD ALWAYS BE SORTED BY VEHICLE LOCATION DESC
+    private List<Vehicle> vehicles;     // SHOULD ALWAYS BE SORTED BY VEHICLE LOCATION DESC
 
 
     Road(String id, Junction srcJunction, Junction destJunction, int maxSpeed, int contLimit, int length, Weather weather){
@@ -58,7 +58,7 @@ public abstract class Road extends SimulatedObject{
 
         this.totalContamination = 0;
 
-        this.vehicles = new ArrayList<Vehicle>();
+        this.vehicles = new SortedArrayList<Vehicle>();
 
         this.destJunction.addIncomingRoad(this);
         this.srcJunction.addOutGoingRoad(this);

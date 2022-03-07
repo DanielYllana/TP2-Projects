@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7b60f6e1-6d66-4cbe-9cea-29e5daeb4823" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../TP2-Projects.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../TP2-Projects.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.MD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/commons-cli-1.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/json.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/examples/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/examples/db.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/examples/ex1.expout.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/examples/ex1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/examples/ex2.expout.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/examples/ex2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/examples/ex3.expout.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/examples/ex3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/other/json-example-1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/other/json-example-2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/other/json-example-3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/uml/control.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/uml/factories.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/uml/factories.ucls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/uml/model.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/uml/model.ucls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/extra/json/UsageExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/extra/testing/TestExamples.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/control/Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/Builder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/BuilderBasedFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/Factory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/MostCrowdedStrategyBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/MoveAllStrategyBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/MoveFirstStrategyBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/NewCityRoadEventBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/NewInterCityRoadEventBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/NewJunctionEventBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/NewVehicleEventBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/RoundRobinStrategyBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/SetContClassEventBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/factories/SetWeatherEventBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/launcher/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/misc/Pair.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/misc/SortedArrayList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/misc/Utils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/CityRoad.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/DequeuingStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/Event.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/InterCityRoad.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/Junction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/LightSwitchingStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/MostCrowdedStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/MoveAllStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/MoveFirstStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/NewCityRoadEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/NewInterCityRoadEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/NewJunctionEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/NewSetContClassEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/NewVehicleEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/Road.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/RoadMap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/RoundRobinStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/SetWeatherEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/SimulatedObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/TrafficSimulator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/Vehicle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/VehicleStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulator/model/Weather.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/CityRoadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/CityRoadTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/InterCityRoadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/InterCityRoadTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/JunctionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/JunctionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/MostCrowdedStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/MostCrowdedStrategyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/MoveAllStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/MoveAllStrategyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/MoveFirstStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/MoveFirstStrategyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/NewCityRoadEventTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/NewCityRoadEventTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/NewInterCityRoadEventTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/NewInterCityRoadEventTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/NewJunctionEventTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/NewJunctionEventTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/NewVehicleEventTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/NewVehicleEventTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/RoadMapTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/RoadMapTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/RoundRobinStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/RoundRobinStrategyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/SetContClassEventTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/SetContClassEventTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/SetWeatherEventTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/SetWeatherEventTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/TrafficSimulatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/TrafficSimulatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/model/VehicleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/model/VehicleTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="263NJLWIuprNrKoCO4XXeb5ZeQt" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7b60f6e1-6d66-4cbe-9cea-29e5daeb4823" name="Changes" comment="" />
+      <created>1646648237249</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1646648237249</updated>
+    </task>
+    <servers />
+  </component>
+</project>

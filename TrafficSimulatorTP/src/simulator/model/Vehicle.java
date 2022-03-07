@@ -8,7 +8,7 @@ import java.util.List;
 import java.lang.Math;
 
 
-public class Vehicle extends SimulatedObject{
+public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
     private List<Junction> itinerary;  // to complete well //don´t have set or get yet //to define junction
     private int maximumSpeed;
     private int currentSpeed;
@@ -198,5 +198,8 @@ public class Vehicle extends SimulatedObject{
     }
 
 
-
+    @Override
+    public int compareTo(Vehicle o) {
+        return this.location - o.getLocation();
+    }
 }
