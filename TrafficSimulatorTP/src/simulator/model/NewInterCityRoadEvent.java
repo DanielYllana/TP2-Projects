@@ -27,4 +27,11 @@ public class NewInterCityRoadEvent extends Event {
         Road r = new InterCityRoad(this.id, srcJun, destJun, this.maxSpeed, this.co2Limit, this.length, this.weather);
         map.addRoad(r);
     }
+
+
+
+    @Override
+    public String toString() {
+        return "New Inter City Road '" + this.id + "'";
+    }
 }

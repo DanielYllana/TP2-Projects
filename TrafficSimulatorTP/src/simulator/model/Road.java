@@ -176,6 +176,8 @@ public abstract class Road extends SimulatedObject{
         return Collections.unmodifiableList(vehicles);
     }
 
+    public int getCurrentSpeedLimit() { return this.currentSpeedLimit; }
+
     private void setC(int c) {
         this.totalContamination = c;
     }

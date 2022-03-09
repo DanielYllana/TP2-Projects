@@ -29,4 +29,10 @@ public class NewSetContClassEvent extends Event {
             v.setContClass(c.getSecond());
         }
     }
+
+
+    @Override
+    public String toString() {
+        return "Setting Contamination Class";
+    }
 }

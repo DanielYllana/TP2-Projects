@@ -165,38 +165,39 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
         getters: Only the ones asked by the teacher
     */
 
-    int getLocation() {
+    public int getLocation() {
         return this.location;
     }
 
-    int getSpeed(){
+    public int getSpeed(){
         return this.currentSpeed;
     }
 
-    int getMaxSpeed(){
+    public int getMaxSpeed(){
         return this.maximumSpeed;
     }
 
-    int getContClass(){
+    public int getContClass(){
         return this.contaminationClass;
     }
 
-    VehicleStatus getStatus(){
+    public VehicleStatus getStatus(){
         return this.status;
     }
 
-    int getTotalCO2(){
+    public int getTotalCO2(){
         return this.totalContamination;
     }
 
-    List<Junction> getItinerary() {
+    public List<Junction> getItinerary() {
         return this.itinerary;
     }
 
-    Road getRoad(){
+    public Road getRoad(){
         return this.road;
     }
 
+    public int getTotalDistance() { return this.totalDistance; }
 
     @Override
     public int compareTo(Vehicle o) {

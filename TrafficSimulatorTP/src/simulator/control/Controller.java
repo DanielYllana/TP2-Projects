@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import simulator.factories.Factory;
 import simulator.model.Event;
+import simulator.model.TrafficSimObserver;
 import simulator.model.TrafficSimulator;
 
 import java.io.InputStream;
@@ -56,8 +57,33 @@ public class Controller {
         p.println(jo.toString(3));
     }
 
+    public void run(int n) {
+        for (int i = 0; i < n; i++) {
+            this.trafficSim.advance();
+        }
+    }
+
     public void reset() {
         this.trafficSim.reset();
     }
+
+
+    public void addObserver(TrafficSimObserver o) {
+        this.trafficSim.addObserver(o);
+    }
+
+    public void removeObserver(TrafficSimObserver o) {
+        this.trafficSim.removeObserver(o);
+    }
+
+    public void addEvent(Event e) {
+        this.trafficSim.addEvent(e);
+    }
+
+
+    public int getSimTime() {
+        return this.trafficSim.getSimTime();
+    }
+
 
 }

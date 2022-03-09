@@ -18,6 +18,9 @@ import simulator.model.DequeuingStrategy;
 import simulator.model.Event;
 import simulator.model.LightSwitchingStrategy;
 import simulator.model.TrafficSimulator;
+import simulator.view.MainWindow;
+
+import javax.swing.*;
 
 public class Main {
 
@@ -26,6 +29,8 @@ public class Main {
 	private static String _outFile = null;
 	private static Factory<Event> _eventsFactory = null;
 	private static int simulationTicks;
+	private static boolean enableGUI = true;
+	private static boolean loadEvents = false;
 
 	private static void parseArgs(String[] args) {
 
@@ -38,10 +43,12 @@ public class Main {
 		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine line = parser.parse(cmdLineOptions, args);
+
 			parseHelpOption(line, cmdLineOptions);
 			parseInFileOption(line);
 			parseOutFileOption(line);
 			parseTicksOption(line);
+			parseModeOption(line);
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -70,6 +77,7 @@ public class Main {
 		cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
 		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Ticks to the simulator's main loop" +
 				"default value is 10).").build());
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("Type of simulation").build());
 
 		return cmdLineOptions;
 	}
@@ -83,9 +91,9 @@ public class Main {
 	}
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
-		_inFile = line.getOptionValue("i");
-		if (_inFile == null) {
-			throw new ParseException("An events file is missing");
+		if (line.hasOption("i")) {
+			Main._inFile = line.getOptionValue("i");
+			Main.loadEvents = true;
 		}
 	}
 
@@ -101,18 +109,35 @@ public class Main {
 		}
 	}
 
+	private static void parseModeOption(CommandLine line) throws ParseException {
+
+		if (line.hasOption("m") && line.getOptionValue("m").equals("console")) {
+			// Console mode
+			Main.enableGUI = false;
+		} else if (line.hasOption("m") && !line.getOptionValue("m").equals("gui")) {
+			// option -m used with invalid value
+			throw new ParseException("Unkown mode type");
+		} else {
+			// GUI Mode DEFAULT
+			if (line.hasOption("i")) {
+				// load events into the sim
+				Main.loadEvents = true;
+			}
+		}
+	}
+
 
 	private static void initFactories() {
 		List<Builder<LightSwitchingStrategy>> lsbs = new ArrayList<>();
 		lsbs.add( new RoundRobinStrategyBuilder());
 		lsbs.add( new MostCrowdedStrategyBuilder());
 		Factory<LightSwitchingStrategy> lssFactory = new BuilderBasedFactory<>(lsbs);
-
+		
 		List<Builder<DequeuingStrategy>> dqbs = new ArrayList<>();
 		dqbs.add( new MoveFirstStrategyBuilder());
 		dqbs.add( new MoveAllStrategyBuilder());
 		Factory<DequeuingStrategy> dqsFactory = new BuilderBasedFactory<>(dqbs);
-
+		
 		List<Builder<Event>> ebs = new ArrayList<>();
 		ebs.add( new NewJunctionEventBuilder(lssFactory, dqsFactory));
 		ebs.add( new NewCityRoadEventBuilder());
@@ -150,10 +175,21 @@ public class Main {
 
 	}
 
+	private static void startGUIMode() {
+		TrafficSimulator sim = new TrafficSimulator();
+		Controller ctrl = new Controller(sim, Main._eventsFactory);
+
+		SwingUtilities.invokeLater(() -> new MainWindow(ctrl));
+	}
+
 	private static void start(String[] args) throws IOException {
 		initFactories();
 		parseArgs(args);
-		startBatchMode();
+		if (Main.enableGUI) {
+			startGUIMode();
+		} else {
+			startBatchMode();
+		}
 	}
 
 	// example command lines:

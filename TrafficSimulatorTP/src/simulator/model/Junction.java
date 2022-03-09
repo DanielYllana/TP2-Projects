@@ -132,4 +132,24 @@ public class Junction extends SimulatedObject{
     }
 
 
+    public int getGreenLightIndex() {
+        return this.greenLightIdx;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public List<Road> getInRoads() {
+        return this.incomingRoad;
+    }
+
+
+    public Map<Road,List<Vehicle>> getQueue() {
+        return this.roadQueueMap;
+    }
 }

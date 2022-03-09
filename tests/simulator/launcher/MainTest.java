@@ -13,6 +13,7 @@ class MainTest {
 	static private boolean run(String inFile, String outFile, String expOutFile, Integer ticks) {
 
 		try {
+			System.out.println(inFile);
 			simulator.launcher.Main.main(new String[] { "-i", inFile, "-o", outFile, "-t", ticks.toString() });
 
 			File currRunOutFile = new File(outFile);
@@ -49,5 +50,7 @@ class MainTest {
 				150));
 
 	}
+
+
 
 }
