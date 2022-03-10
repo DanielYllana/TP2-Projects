@@ -19,7 +19,8 @@ public class CityRoad extends Road {
     }
 
     @Override
-    void updateSpeedLimit() { // doesnt do anything
+    void updateSpeedLimit() {
+        this.currentSpeedLimit = this.maxSpeed;
     }
 
     @Override

@@ -34,9 +34,9 @@ public class NewJunctionEventBuilder extends Builder<Event> {
         String id = data.getString("id");
 
 
-        LightSwitchingStrategy lss = this.lssFactory.createInstance((JSONObject) data.get("ls_strategy"));
+        LightSwitchingStrategy lss = this.lssFactory.createInstance(data.getJSONObject("ls_strategy"));
 
-        DequeuingStrategy dqs = this.dqsFactory.createInstance((JSONObject) data.get("dq_strategy"));
+        DequeuingStrategy dqs = this.dqsFactory.createInstance(data.getJSONObject("dq_strategy"));
 
         JSONArray ja = data.getJSONArray("coor");
 

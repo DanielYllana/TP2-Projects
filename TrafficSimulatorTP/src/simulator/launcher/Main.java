@@ -19,6 +19,7 @@ import simulator.model.Event;
 import simulator.model.LightSwitchingStrategy;
 import simulator.model.TrafficSimulator;
 import simulator.view.MainWindow;
+import simulator.model.Event;
 
 import javax.swing.*;
 

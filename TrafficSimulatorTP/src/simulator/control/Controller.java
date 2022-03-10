@@ -43,18 +43,27 @@ public class Controller {
     }
 
     public void run(int n, OutputStream out) {
-        JSONArray ja = new JSONArray();
+        PrintStream p = new PrintStream(out);
 
-        for (int i = 0; i < n; i++) {
+        p.print("{");
+        p.print("  \"states\": [");
+
+        for (int i = 0; i < n - 1; i++) {
             this.trafficSim.advance();
-            ja.put(this.trafficSim.report());
+            p.println(this.trafficSim.report());
+
+            p.print(",");
+
         }
 
-        JSONObject jo = new JSONObject();
-        jo.put("states", ja);
+        if (n > 0) {
+            this.trafficSim.advance();
+            p.println(this.trafficSim.report());
+        }
 
-        PrintStream p = new PrintStream(out);
-        p.println(jo.toString(3));
+        p.println("]");
+        p.println("}");
+        p.close();
     }
 
     public void run(int n) {

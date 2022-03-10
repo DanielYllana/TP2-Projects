@@ -22,7 +22,7 @@ public abstract class Road extends SimulatedObject{
     private Junction srcJunction;       // source Junction
     private Junction destJunction;      // destination Junction
     private int length;
-    private int maxSpeed;               // Maximum speed
+    protected int maxSpeed;               // Maximum speed
     protected int currentSpeedLimit;      // Current Speed limit ; ITS INITIAL VALUE SHOULD BE EQUAL TO maxSpeed
     private int cntAlarmLimit;          // Contamination alarm limit
     private Weather weatherConditions;  // Weather conditions
@@ -58,7 +58,7 @@ public abstract class Road extends SimulatedObject{
 
         this.totalContamination = 0;
 
-        this.vehicles = new SortedArrayList<Vehicle>();
+        this.vehicles = new ArrayList<Vehicle>();
 
         this.destJunction.addIncomingRoad(this);
         this.srcJunction.addOutGoingRoad(this);
@@ -88,6 +88,7 @@ public abstract class Road extends SimulatedObject{
 
     void addContamination(int c){
         if(c < 0){
+            throw new IllegalArgumentException("Contamination should be positive");
         }
         else{
             this.totalContamination = this.totalContamination + c;
@@ -178,7 +179,4 @@ public abstract class Road extends SimulatedObject{
 
     public int getCurrentSpeedLimit() { return this.currentSpeedLimit; }
 
-    private void setC(int c) {
-        this.totalContamination = c;
-    }
 }

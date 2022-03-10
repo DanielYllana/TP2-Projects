@@ -50,13 +50,14 @@ public class Junction extends SimulatedObject{
         }
         this.incomingRoad.add(r);
 
-        this.listQueues.add(new ArrayList<>());
-        this.roadQueueMap.put(r, new ArrayList());
+        List list = new ArrayList<>();
+        this.listQueues.add(list);
+        this.roadQueueMap.put(r, list);
 
     }
 
     void addOutGoingRoad(Road r) {
-        if (!r.getSrc().getId().equals(this._id) ||
+        if (!r.getSrc().equals(this) ||
                 this.outgoingRoad.containsKey(r.getDest())
             ) {
             throw new IllegalArgumentException("Invalid outgoing road");
@@ -64,13 +65,8 @@ public class Junction extends SimulatedObject{
         this.outgoingRoad.put(r.getDest(), r);
     }
 
-    void enter(Vehicle v, Road nextRoad) {
-        //Road newRoad = v.getItinerary().
-        int roadIndex = this.incomingRoad.indexOf(nextRoad); // get index of road in queues
-
-        this.listQueues.get(roadIndex).add(v);  // add vehicle to list queues
-
-        this.roadQueueMap.replace(v.getRoad(), this.listQueues.get(roadIndex)); // add list with new vehicle to map
+    void enter(Vehicle v) {
+        this.roadQueueMap.get(v.getRoad()).add(v);
     }
 
     Road roadTo(Junction j) {

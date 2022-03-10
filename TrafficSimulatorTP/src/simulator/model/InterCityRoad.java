@@ -38,7 +38,7 @@ public class InterCityRoad extends Road {
     void updateSpeedLimit() {
         this.currentSpeedLimit = this.getMaxSpeed();
         if (this.totalContamination > this.getContLimit()) {
-            this.currentSpeedLimit = (int) this.getMaxSpeed() / 2;
+            this.currentSpeedLimit = this.getMaxSpeed() / 2;
         }
 
     }

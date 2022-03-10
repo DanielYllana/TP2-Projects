@@ -4,8 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import simulator.misc.Pair;
 import simulator.model.Event;
-import simulator.model.NewSetContClassEvent;
-import simulator.model.Weather;
+import simulator.model.SetContClassEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +41,6 @@ public class SetContClassEventBuilder extends Builder<Event> {
 
         }
 
-        return new NewSetContClassEvent(time, cs);
+        return new SetContClassEvent(time, cs);
     }
 }

@@ -14,7 +14,7 @@ class MainTest {
 
 		try {
 			System.out.println(inFile);
-			simulator.launcher.Main.main(new String[] { "-i", inFile, "-o", outFile, "-t", ticks.toString() });
+			simulator.launcher.Main.main(new String[] { "-m", "console", "-i", inFile, "-o", outFile, "-t", ticks.toString() });
 
 			File currRunOutFile = new File(outFile);
 			File expectedOutFile = new File(expOutFile);

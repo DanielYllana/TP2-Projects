@@ -21,7 +21,10 @@ public class NewVehicleEvent extends Event {
 
         List<Junction> vehicleItinerary = new ArrayList<>();
         for (String s: this.itinerary) {
-            vehicleItinerary.add(map.getJunction(s));
+            Junction j = map.getJunction(s);
+            if (j != null) {
+                vehicleItinerary.add(j);
+            }
         }
 
         Vehicle v = new Vehicle(this.id, this.maxSpeed, this.contClass, vehicleItinerary);

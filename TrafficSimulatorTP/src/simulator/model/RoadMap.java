@@ -31,7 +31,7 @@ public class RoadMap {
             !this.junctionsMap.containsKey(r.getSrc().getId()) ||
             !this.junctionsMap.containsKey(r.getDest().getId())
         ) {
-            throw new IllegalArgumentException("Road is already in map");
+            throw new IllegalArgumentException("Invalid road to be added to the map");
         }
         this.roadsList.add(r);
         this.roadsMap.put(r.getId(), r);

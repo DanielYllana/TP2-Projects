@@ -1,12 +1,14 @@
 package simulator.view;
 
 import simulator.control.Controller;
+import simulator.misc.SortedArrayList;
 import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 import simulator.model.Vehicle;
 
 import javax.swing.table.AbstractTableModel;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
     private String[] _colNames = {"Time", "Description" };
 
     public EventsTableModel(Controller _ctrl) {
-        this._events= new ArrayList<Event>();
+        this._events= new SortedArrayList<Event>();
         _ctrl.addObserver(this);
     }
 
@@ -66,13 +68,18 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
     @Override
     public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-
+        System.out.println("onAdvance curr events " + this._events.size() + " new events: " + events.size());
+        //this._events = events;
+        this.update();
     }
 
     @Override
     public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
+        System.out.println("Event added size before: " + this._events.size());
         this._events.add(e);
         this.update();
+        System.out.println("Event added size after: " + this._events.size());
+
     }
 
     @Override
@@ -82,7 +89,6 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
-
     }
 
     @Override

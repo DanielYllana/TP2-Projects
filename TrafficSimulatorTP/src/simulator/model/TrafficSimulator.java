@@ -24,8 +24,9 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
     }
 
     public void addEvent(Event e) {
-        this.eventsList.add(e); // should still be sorted
-        this.eventsList.sort(Comparator.comparingInt(Event::getTime));
+        if (e.getTime() > this.simulationTime) {
+            this.eventsList.add(e); // should still be sorted
+        }
 
 
         for (TrafficSimObserver ob: this.observerList) {
@@ -40,9 +41,13 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
             ob.onAdvanceStart(this.roadMap, this.eventsList, this.simulationTime);
         }
 
-        for(Event e: this.eventsList) {
+        Event e;
+        for(int i = 0; i < this.eventsList.size(); i++) {
+            e = this.eventsList.get(i);
             if (e.getTime() == this.simulationTime) {
                 e.execute(this.roadMap);
+            } else if(e.getTime() < this.simulationTime) {
+                break;
             }
         }
 

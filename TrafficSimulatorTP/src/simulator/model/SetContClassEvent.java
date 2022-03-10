@@ -4,11 +4,11 @@ import simulator.misc.Pair;
 
 import java.util.List;
 
-public class NewSetContClassEvent extends Event {
+public class SetContClassEvent extends Event {
 
     private List<Pair<String, Integer>> cs;
 
-    public NewSetContClassEvent(int time, List<Pair<String, Integer>> cs) {
+    public SetContClassEvent(int time, List<Pair<String, Integer>> cs) {
         super(time);
 
         if (cs == null) {

@@ -1,9 +1,6 @@
 package simulator.launcher;
 
-
-
 public class MainRunnerV2 {
-
 
 
     static private void run(String mode, Integer ticks) {

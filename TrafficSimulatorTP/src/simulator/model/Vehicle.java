@@ -8,7 +8,7 @@ import java.util.List;
 import java.lang.Math;
 
 
-public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
+public class Vehicle extends SimulatedObject{
     private List<Junction> itinerary;  // to complete well //don´t have set or get yet //to define junction
     private int maximumSpeed;
     private int currentSpeed;
@@ -83,11 +83,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 
             if(this.location == road.getLength()){
 
-                // TODO CHECK might go in moveToNextRoad()
-                Road nextRoad = this.itinerary.get(this.itineraryIndex).roadTo(this.itinerary.get(this.itineraryIndex + 1));
-                this.itinerary.get(this.itineraryIndex + 1).enter(this, nextRoad);
-                // TODO CHECK
-                //The vehicle enters the queue of the corresponding junction (by calling the corresponding method of class Junction)
+                this.itinerary.get(this.itineraryIndex + 1).enter(this);
                 this.setStatus(VehicleStatus.WAITING);
 
             }
@@ -117,11 +113,9 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
             }
             this.itineraryIndex++;
         } else {
-            // TODO
-            //throw new
-            // throw exception; no se que tipo de excepcion poner ???
+            assert(false);
         }
-        ;
+
     }
 
 
@@ -199,8 +193,8 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 
     public int getTotalDistance() { return this.totalDistance; }
 
-    @Override
-    public int compareTo(Vehicle o) {
-        return this.location - o.getLocation();
+
+    public String toString() {
+        return this._id;
     }
 }
